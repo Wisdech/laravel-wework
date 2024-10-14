@@ -1,4 +1,4 @@
-composer.phar
-.DS_Store
-/vendor/
 /.idea
+/.vscode
+/vendor
+.DS_Store

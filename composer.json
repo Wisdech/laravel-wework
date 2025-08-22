@@ -1,33 +1,33 @@
 {
-    "name": "wisdech/laravel-wework",
+    "name": "xxutianyi/laravel-wework",
     "description": "Laravel 企业微信服务端接口实现",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Wisdech\\Wework\\": "src/"
+            "XuDev\\Wework\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "Beijing Wisdech Technology Co., Ltd.",
-            "email": "info@wisdech.com"
+            "name": "徐添翼",
+            "email": "xutianyi12@outlook.com"
         }
     ],
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^11.27",
-        "symfony/cache": "^7.1",
-        "guzzlehttp/guzzle": "^7.9"
+        "illuminate/http": ">11",
+        "illuminate/support": ">11",
+        "laravel/pint": "*"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Wisdech\\Wework\\WeworkProvider"
+                "XuDev\\Wework\\WeworkProvider"
             ],
             "aliases": {
-                "Wework": "Wisdech\\Wework\\Facade\\Wework"
+                "Wework": "XuDev\\Wework\\Facade\\Wework"
             }
         }
     }

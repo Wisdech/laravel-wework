@@ -1,14 +1,14 @@
 <?php
 
-namespace Wisdech\Wework\Exception;
+namespace XuDev\Wework\Exception;
 
 use Exception;
 
 class WeworkException extends Exception
 {
-    public function __construct(int $code = 0, string $message = null)
+    public function __construct(int $code = 0, ?string $message = null)
     {
-        if (!$message) {
+        if (! $message) {
             $message = match ($code) {
                 6000 => '数据版本冲突',
                 40001 => '不合法的secret参数',

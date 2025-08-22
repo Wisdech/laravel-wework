@@ -1,9 +1,9 @@
 <?php
 
-namespace Wisdech\Wework;
+namespace XuDev\Wework;
 
 use Illuminate\Support\ServiceProvider;
-use Wisdech\Wework\WeworkSDK;
+use XuDev\Wework\Facade\Wework;
 
 class WeworkProvider extends ServiceProvider
 {
@@ -12,12 +12,8 @@ class WeworkProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(WeworkSDK::class, function ($app) {
-            return new WeworkSDK(
-                config('wework.corp_id'),
-                config('wework.agent_id'),
-                config('wework.secret'),
-            );
+        $this->app->singleton(Wework::class, function ($app) {
+            return new Wework;
         });
     }
 
@@ -27,7 +23,7 @@ class WeworkProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/wework.php' => config_path('wework.php'),
+            __DIR__.'/../config/wework.php' => config_path('wework.php'),
         ], 'wework-config');
     }
 }

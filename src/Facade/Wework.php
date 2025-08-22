@@ -1,9 +1,9 @@
 <?php
 
-namespace Wisdech\Wework\Facade;
+namespace XuDev\Wework\Facade;
 
 use Illuminate\Support\Facades\Facade;
-use Wisdech\Wework\WeworkSDK;
+use XuDev\Wework\WeworkSDK;
 
 /**
  * @method static string buildLoginUri(string $redirectUrl, string $state, bool $inApp = false)

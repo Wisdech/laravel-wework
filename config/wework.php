@@ -10,4 +10,7 @@ return [
 
     /** 应用 Secret */
     'secret' => env('WEWORK_SECRET'),
+
+    /** Callback PATH */
+    'redirect_uri' => env('WEWORK_REDIRECT_URI', '/wework/callback'),
 ];

@@ -5,29 +5,18 @@ namespace XuDev\Wework;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use XuDev\Wework\Core\OAuth;
 use XuDev\Wework\Exception\WeworkException;
 
 class WeworkSDK
 {
     const CacheKey = 'wework_corp_access_token';
 
-    protected string $host = 'https://qyapi.weixin.qq.com/cgi-bin';
-
     protected string $corpId;
 
     protected string $agentId;
 
     protected string $secret;
-
-    protected ?string $accessToken;
-
-    /**
-     * 获取完整请求 uri
-     */
-    protected function buildUri(string $uri): string
-    {
-        return $this->host.$uri;
-    }
 
     /**
      * 初始化SDK
@@ -40,10 +29,30 @@ class WeworkSDK
         $this->corpId = config('wework.corp_id');
         $this->agentId = config('wework.agent_id');
         $this->secret = config('wework.secret');
+    }
 
-        if (! empty($this->corpId) && ! empty($this->secret)) {
-            $this->setAccessToken();
-        }
+    /**
+     * 获取 corpId
+     */
+    public function getCorpId(): string
+    {
+        return $this->corpId;
+    }
+
+    /**
+     * 获取 agentId
+     */
+    public function getAgentId(): string
+    {
+        return $this->agentId;
+    }
+
+    /**
+     * OAuth 模块
+     */
+    public function OAuth(): OAuth
+    {
+        return new OAuth($this);
     }
 
     /**
@@ -51,7 +60,7 @@ class WeworkSDK
      *
      * @throws WeworkException
      */
-    private function unpackResult(array $result): array
+    public function checkResponse(array $result): void
     {
         if (array_key_exists('errcode', $result)) {
             if ($result['errcode'] != 0) {
@@ -60,21 +69,21 @@ class WeworkSDK
         } else {
             throw new WeworkException(0, '返回结果检查失败');
         }
-
-        return $result;
     }
 
     /**
-     * 设置AccessToken
+     * 获取AccessToken
      *
      * @throws WeworkException|ConnectionException
      */
-    private function setAccessToken(): void
+    public function getAccessToken(): string
     {
-        $this->accessToken = Cache::get(self::CacheKey);
-        if (empty($this->accessToken)) {
-            $this->accessToken = $this->refreshAccessToken();
+        $accessToken = Cache::get(self::CacheKey);
+        if (empty($accessToken)) {
+            return $this->refreshAccessToken();
         }
+
+        return $accessToken;
     }
 
     /**
@@ -84,14 +93,14 @@ class WeworkSDK
      */
     private function refreshAccessToken(): string
     {
-        $url = $this->buildUri('/gettoken');
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken';
 
         $result = Http::get($url, [
             'corpid' => $this->corpId,
             'corpsecret' => $this->secret,
         ])->json();
 
-        $result = $this->unpackResult($result);
+        $this->checkResponse($result);
 
         $expiresIn = $result['expires_in'];
         $accessToken = $result['access_token'];
@@ -99,50 +108,5 @@ class WeworkSDK
         Cache::put(self::CacheKey, $accessToken, $expiresIn);
 
         return $accessToken;
-    }
-
-    /**
-     * 获取授权登录链接
-     *
-     * @param  string  $redirectUrl  系统回调地址
-     * @param  string  $state  随机State
-     * @param  bool  $inApp  应用内/网页端，返回不同链接
-     * @return string 完整登录地址
-     */
-    public function buildLoginUri(string $redirectUrl, string $state, bool $inApp = false): string
-    {
-        return $inApp
-            ? 'https://open.weixin.qq.com/connect/oauth2/authorize?'.http_build_query([
-                'appid' => $this->corpId,
-                'redirect_uri' => $redirectUrl,
-                'agentid' => $this->agentId,
-                'state' => $state,
-                'response_type' => 'code',
-                'scope' => 'snsapi_base',
-            ]).'#wechat_redirect'
-            : 'https://login.work.weixin.qq.com/wwlogin/sso/login?'.http_build_query([
-                'login_type' => 'CorpApp',
-                'appid' => $this->corpId,
-                'agentid' => $this->agentId,
-                'redirect_uri' => $redirectUrl,
-                'state' => $state,
-            ]);
-    }
-
-    /**
-     * 根据用户授权码获取用户信息
-     *
-     * @throws WeworkException|ConnectionException
-     */
-    public function getUserInfo(string $code): array
-    {
-        $url = $this->buildUri('/auth/userinfo');
-
-        $result = Http::get($url, [
-            'code' => $code,
-            'access_token' => $this->accessToken,
-        ])->json();
-
-        return $this->unpackResult($result);
     }
 }

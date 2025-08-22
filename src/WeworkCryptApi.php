@@ -3,8 +3,8 @@
 namespace XuDev\Wework;
 
 use XuDev\Wework\Exception\CryptException;
-use XuDev\Wework\Utils\CryptoCore;
-use XuDev\Wework\Utils\XMLParser;
+use XuDev\Wework\WeworkCryptApi\CryptoCore;
+use XuDev\Wework\WeworkCryptApi\XMLParser;
 
 class WeworkCryptApi
 {

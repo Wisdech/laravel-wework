@@ -6,7 +6,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use XuDev\Wework\Exception\WeworkException;
-use XuDev\Wework\SDK\OAuth;
+use XuDev\Wework\WeworkApi\OAuth;
 
 class WeworkApi
 {

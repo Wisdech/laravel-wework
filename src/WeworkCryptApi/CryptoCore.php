@@ -1,6 +1,6 @@
 <?php
 
-namespace XuDev\Wework\Utils;
+namespace XuDev\Wework\WeworkCryptApi;
 
 use Illuminate\Support\Str;
 use XuDev\Wework\Exception\CryptException;

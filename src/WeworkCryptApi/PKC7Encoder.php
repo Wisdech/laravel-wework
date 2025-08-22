@@ -1,6 +1,6 @@
 <?php
 
-namespace XuDev\Wework\Utils;
+namespace XuDev\Wework\WeworkCryptApi;
 
 class PKC7Encoder
 {

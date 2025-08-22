@@ -1,6 +1,6 @@
 <?php
 
-namespace XuDev\Wework\SDK;
+namespace XuDev\Wework\WeworkApi;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;

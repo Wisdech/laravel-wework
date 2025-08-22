@@ -3,6 +3,7 @@
 namespace XuDev\Wework\Crypt\Utils;
 
 use Exception;
+use Illuminate\Support\Str;
 use XuDev\Wework\Exception\CryptException;
 
 class PrepCrypt
@@ -30,7 +31,7 @@ class PrepCrypt
     {
         try {
 
-            $text = $this->getRandomStr().pack('N', strlen($text)).$text.$receiveId;
+            $text = Str::random().pack('N', strlen($text)).$text.$receiveId;
 
             $pkc_encoder = new PKCS7;
             $text = $pkc_encoder->encode($text);
@@ -88,20 +89,5 @@ class PrepCrypt
         }
 
         return $xml_content;
-    }
-
-    /**
-     * 生成随机字符串
-     */
-    private function getRandomStr(): string
-    {
-        $str = '';
-        $str_pol = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyl';
-        $max = strlen($str_pol) - 1;
-        for ($i = 0; $i < 16; $i++) {
-            $str .= $str_pol[mt_rand(0, $max)];
-        }
-
-        return $str;
     }
 }

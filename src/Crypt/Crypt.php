@@ -26,7 +26,7 @@ class Crypt
     {
         $this->m_sToken = $token;
         $this->m_sEncodingAesKey = $encodingAesKey;
-        $this->m_sReceiveId = $receiveId;
+        $this->m_sReceiveId = config('wework.corp_id');;
     }
 
     /**

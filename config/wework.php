@@ -13,4 +13,10 @@ return [
 
     /** Callback PATH */
     'redirect_uri' => env('WEWORK_REDIRECT_URI', '/wework/callback'),
+
+    /** 收发消息 Token */
+    'message_token' => env('WEWORK_MESSAGE_TOKEN'),
+
+    /** 收发消息 EncodingAESKey */
+    'encoding_aes_key' => env('WEWORK_ENCODING_AES_KEY'),
 ];

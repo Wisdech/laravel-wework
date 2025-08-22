@@ -2,18 +2,23 @@
 
 namespace XuDev\Wework;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use XuDev\Wework\Facade\Wework;
+use XuDev\Wework\Facade\WeworkCrypt;
 
-class WeworkProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Register services.
      */
     public function register(): void
     {
-        $this->app->singleton(Wework::class, function ($app) {
+        $this->app->singleton(Wework::class, function () {
             return new Wework;
+        });
+
+        $this->app->singleton(WeworkCrypt::class, function () {
+            return new WeworkCrypt;
         });
     }
 

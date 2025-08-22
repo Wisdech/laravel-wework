@@ -14,21 +14,22 @@
             "email": "xutianyi12@outlook.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
-        "illuminate/http": ">11",
-        "illuminate/support": ">11",
-        "laravel/pint": "*"
+        "laravel/framework": "^11|^12",
+        "ext-dom": "*",
+        "ext-openssl": "*"
+    },
+    "require-dev": {
+        "laravel/pint": "1.24"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "XuDev\\Wework\\WeworkProvider"
-            ],
-            "aliases": {
-                "Wework": "XuDev\\Wework\\Facade\\Wework"
-            }
+                "XuDev\\Wework\\ServiceProvider"
+            ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

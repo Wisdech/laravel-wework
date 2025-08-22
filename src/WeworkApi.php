@@ -5,10 +5,10 @@ namespace XuDev\Wework;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use XuDev\Wework\Core\OAuth;
 use XuDev\Wework\Exception\WeworkException;
+use XuDev\Wework\SDK\OAuth;
 
-class WeworkSDK
+class WeworkApi
 {
     const CacheKey = 'wework_corp_access_token';
 
@@ -20,9 +20,6 @@ class WeworkSDK
 
     /**
      * 初始化SDK
-     *
-     * @throws ConnectionException
-     * @throws WeworkException
      */
     public function __construct()
     {

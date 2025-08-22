@@ -1,12 +1,12 @@
 <?php
 
-namespace XuDev\Wework\Crypt\Utils;
+namespace XuDev\Wework\Utils;
 
 use DOMDocument;
 use Exception;
 use XuDev\Wework\Exception\CryptException;
 
-class XML
+class XMLParser
 {
     /**
      * 提取出xml数据包中的加密消息

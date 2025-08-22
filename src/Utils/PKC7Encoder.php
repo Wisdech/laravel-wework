@@ -1,10 +1,10 @@
 <?php
 
-namespace XuDev\Wework\Crypt\Utils;
+namespace XuDev\Wework\Utils;
 
-class PKCS7
+class PKC7Encoder
 {
-    public int $block_size = 32;
+    const BLOCK_SIZE = 32;
 
     /**
      * 对需要加密的明文进行填充补位
@@ -12,14 +12,13 @@ class PKCS7
      * @param  string  $text  需要进行填充补位操作的明文
      * @return string 补齐明文字符串
      */
-    public function encode(string $text): string
+    public static function encode(string $text): string
     {
-        $block_size = $this->block_size;
         $text_length = strlen($text);
 
-        $amount_to_pad = $block_size - ($text_length % $block_size);
+        $amount_to_pad = self::BLOCK_SIZE - ($text_length % self::BLOCK_SIZE);
         if ($amount_to_pad == 0) {
-            $amount_to_pad = $block_size;
+            $amount_to_pad = self::BLOCK_SIZE;
         }
 
         $pad_chr = chr($amount_to_pad);
@@ -34,11 +33,11 @@ class PKCS7
      * @param  string  $text  decrypted 解密后的明文
      * @return string 删除填充补位后的明文
      */
-    public function decode(string $text): string
+    public static function decode(string $text): string
     {
 
         $pad = ord(substr($text, -1));
-        if ($pad < 1 || $pad > $this->block_size) {
+        if ($pad < 1 || $pad > self::BLOCK_SIZE) {
             $pad = 0;
         }
 

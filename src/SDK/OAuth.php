@@ -1,6 +1,6 @@
 <?php
 
-namespace XuDev\Wework\Core;
+namespace XuDev\Wework\SDK;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
@@ -12,7 +12,7 @@ use Illuminate\Support\Uri;
 use XuDev\Wework\Exception\StateErrorException;
 use XuDev\Wework\Exception\WeworkException;
 use XuDev\Wework\Model\WeUser;
-use XuDev\Wework\WeworkSDK;
+use XuDev\Wework\WeworkApi;
 
 class OAuth
 {
@@ -22,7 +22,7 @@ class OAuth
 
     private string $redirectUri;
 
-    public function __construct(protected WeworkSDK $sdk)
+    public function __construct(protected WeworkApi $sdk)
     {
         $this->redirectUri = Uri::to(config('wework.redirect_uri'));
     }
